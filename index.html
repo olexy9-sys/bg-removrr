@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ClearCut — Batch Background Remover</title>
+<meta name="description" content="Remove backgrounds from up to 250 images or an entire folder.">
+<style>
+:root{--bg:#070912;--card:#0e1220;--line:#252c40;--muted:#8b94a9;--white:#f7f8fc;--purple:#8b72ff;--cyan:#5fe2ff}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 10% 0%,#35246c44,transparent 32%),radial-gradient(circle at 90% 35%,#006c8540,transparent 30%),var(--bg);color:var(--white);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh}.nav{height:78px;max-width:1180px;margin:auto;padding:0 22px;display:flex;align-items:center;justify-content:space-between}.logo{font-size:22px;font-weight:850;text-decoration:none;color:#fff}.logo span{color:#a28cff}.pill{border:1px solid var(--line);background:#0c101b;padding:8px 13px;border-radius:999px;color:#aab2c5;font-size:11px;letter-spacing:1px}.hero{max-width:850px;text-align:center;margin:52px auto 40px;padding:0 20px}.eyebrow{color:#a18dff;font-size:11px;font-weight:800;letter-spacing:2.6px}.hero h1{font-size:clamp(44px,7vw,78px);line-height:.98;letter-spacing:-4px;margin:15px 0}.gradient{background:linear-gradient(90deg,#a991ff,#60e5ff);-webkit-background-clip:text;color:transparent}.hero p{color:#9ba4b8;font-size:17px;line-height:1.6;margin:auto;max-width:690px}.box{max-width:1180px;margin:auto 22px;border:1px solid var(--line);background:#0d111dde;border-radius:26px;box-shadow:0 30px 90px #0007}.drop{min-height:370px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:35px;transition:.2s}.drop.drag{border-color:#947fff;background:#15132a}.icon{width:72px;height:72px;border-radius:21px;display:grid;place-items:center;background:#171b2a;border:1px solid #30374b;font-size:32px;color:#a995ff}.drop h2{margin:17px 0 7px;font-size:26px}.drop p{color:var(--muted);margin:0 0 20px}.buttons{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}.btn{border:0;border-radius:12px;padding:13px 18px;color:#fff;font-weight:800;font-size:14px;cursor:pointer;transition:.15s}.btn:hover{transform:translateY(-1px)}.primary{background:linear-gradient(135deg,var(--purple),var(--cyan));box-shadow:0 10px 28px #7565ff33}.secondary{background:#161b29;border:1px solid #2b3348}.note{font-size:11px;color:#667086;margin-top:16px}.workspace{padding:22px}.top{display:flex;justify-content:space-between;align-items:center;gap:15px}.top strong{font-size:18px}.muted{color:#778197}.actions{display:flex;gap:8px;flex-wrap:wrap}.progress{margin:22px 0}.progress-line{display:flex;justify-content:space-between;color:#8e97ab;font-size:13px;margin-bottom:8px}.track{height:7px;background:#202638;border-radius:99px;overflow:hidden}.fill{height:100%;width:0;background:linear-gradient(90deg,var(--purple),var(--cyan));transition:.2s}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}.item{border:1px solid #222a3c;border-radius:14px;overflow:hidden;background:#0a0e17}.thumb{aspect-ratio:1;display:grid;place-items:center;background-image:linear-gradient(45deg,#252a38 25%,transparent 25%),linear-gradient(-45deg,#252a38 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#252a38 75%),linear-gradient(-45deg,transparent 75%,#252a38 75%);background-size:18px 18px;background-position:0 0,0 9px,9px -9px,-9px 0}.thumb img{width:100%;height:100%;object-fit:contain}.info{padding:9px 10px}.name{font-size:11px;color:#c7ccda;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}.state{font-size:10px;color:#7e899f;margin-top:4px;display:block}.done{margin-top:20px;padding:17px;border:1px solid #294052;border-radius:15px;background:#0d1720;display:flex;justify-content:space-between;align-items:center;gap:15px}.done h3{margin:0 0 4px}.done p{margin:0;color:#8d97a9;font-size:13px}.hidden{display:none!important}footer{text-align:center;color:#515b70;font-size:12px;padding:35px 20px}.folder-tip{margin-top:12px;color:#6f7a91;font-size:11px}input{display:none}@media(max-width:700px){.nav{padding:0 15px}.pill{display:none}.hero{margin-top:30px}.hero h1{letter-spacing:-2.5px}.hero p{font-size:15px}.box{margin:0 12px}.drop{min-height:330px;padding:25px 16px}.top{align-items:flex-start;flex-direction:column}.actions{width:100%}.actions .btn{flex:1}.done{flex-direction:column;align-items:stretch}.done .btn{width:100%}}
+</style>
+</head>
+<body>
+<header class="nav"><a class="logo" href="#">✦ ClearCut</a><div class="pill">BATCH MODE · 250 MAX</div></header>
+
+<section class="hero">
+<div class="eyebrow">AI BACKGROUND REMOVER</div>
+<h1>One folder.<br><span class="gradient">250 clean images.</span></h1>
+<p>Choose individual photos or select an entire folder. ClearCut processes the images in your browser and lets you download the transparent results together.</p>
+</section>
+
+<section id="uploadBox" class="box drop">
+<div class="icon">↑</div>
+<h2>Bring your images</h2>
+<p>Choose photos or add an entire folder</p>
+<div class="buttons">
+<button class="btn primary" id="choose">Choose images</button>
+<button class="btn secondary" id="folderBtn">📁 Add folder</button>
+</div>
+<div class="note">JPG · JPEG · PNG · WEBP · Maximum 250 images</div>
+<div class="folder-tip">Your photos stay in your browser; there is no custom upload server.</div>
+<input id="imageInput" type="file" accept="image/*" multiple>
+<input id="folderInput" type="file" accept="image/*" webkitdirectory directory multiple>
+</section>
+
+<section id="workspace" class="box workspace hidden">
+<div class="top">
+<div><strong id="count">0 images</strong> <span class="muted">selected</span></div>
+<div class="actions">
+<button class="btn secondary" id="add">＋ Add</button>
+<button class="btn secondary" id="clear">Clear</button>
+<button class="btn primary" id="process">Remove backgrounds</button>
+</div>
+</div>
+
+<div class="progress">
+<div class="progress-line"><span id="status">Ready</span><b id="percent">0%</b></div>
+<div class="track"><div class="fill" id="fill"></div></div>
+</div>
+
+<div id="grid" class="grid"></div>
+
+<div id="done" class="done hidden">
+<div><h3>Batch complete 🎉</h3><p id="doneText">Your transparent images are ready.</p></div>
+<button class="btn primary" id="download">Download ZIP</button>
+</div>
+</section>
+
+<footer>ClearCut · Fast batch background removal</footer>
+
+<script type="module">
+import {removeBackground} from "https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.5.8/+esm";
+import JSZip from "https://cdn.jsdelivr.net/npm/jszip@3.10.1/+esm";
+
+const MAX=250;
+const imageInput=document.querySelector("#imageInput");
+const folderInput=document.querySelector("#folderInput");
+const uploadBox=document.querySelector("#uploadBox");
+const workspace=document.querySelector("#workspace");
+const grid=document.querySelector("#grid");
+const count=document.querySelector("#count");
+const status=document.querySelector("#status");
+const percent=document.querySelector("#percent");
+const fill=document.querySelector("#fill");
+const done=document.querySelector("#done");
+const doneText=document.querySelector("#doneText");
+const processBtn=document.querySelector("#process");
+const addBtn=document.querySelector("#add");
+const clearBtn=document.querySelector("#clear");
+const downloadBtn=document.querySelector("#download");
+let images=[],results=[],busy=false;
+
+document.querySelector("#choose").onclick=()=>imageInput.click();
+document.querySelector("#folderBtn").onclick=()=>folderInput.click();
+addBtn.onclick=()=>imageInput.click();
+
+imageInput.onchange=()=>{addFiles([...imageInput.files]);imageInput.value=""};
+folderInput.onchange=()=>{addFiles([...folderInput.files]);folderInput.value=""};
+
+function addFiles(files){
+ const available=MAX-images.length;
+ const valid=files.filter(f=>f.type.startsWith("image/")).slice(0,available);
+ images.push(...valid.map(file=>({file,url:URL.createObjectURL(file),result:null,state:"waiting"})));
+ render();
+ if(files.filter(f=>f.type.startsWith("image/")).length>available) alert("ClearCut allows a maximum of 250 images per batch.");
+}
+
+function render(){
+ workspace.classList.toggle("hidden",images.length===0);
+ count.textContent=`${images.length} image${images.length===1?"":"s"}`;
+ grid.innerHTML="";
+ images.forEach((x,i)=>{
+  const card=document.createElement("div");
+  card.className="item";
+  const src=x.result?URL.createObjectURL(x.result):x.url;
+  card.innerHTML=`<div class="thumb"><img src="${src}" alt=""></div><div class="info"><span class="name">${esc(x.file.name)}</span><span class="state">${x.state}</span></div>`;
+  grid.appendChild(card);
+ });
+}
+function esc(s){return s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
+
+clearBtn.onclick=()=>{
+ if(busy)return;
+ images.forEach(x=>URL.revokeObjectURL(x.url));
+ images=[];results=[];fill.style.width="0";percent.textContent="0%";status.textContent="Ready";done.classList.add("hidden");render();
+};
+
+processBtn.onclick=async()=>{
+ if(!images.length||busy)return;
+ busy=true;processBtn.disabled=true;addBtn.disabled=true;clearBtn.disabled=true;results=[];
+ for(let i=0;i<images.length;i++){
+  const x=images[i];x.state="processing";render();
+  status.textContent=`Removing background ${i+1} of ${images.length}…`;
+  try{
+   x.result=await removeBackground(x.file,{output:{format:"image/png",quality:.9}});
+   x.state="done";results.push({name:pngName(x.file.name),blob:x.result});
+  }catch(e){console.error(e);x.state="failed"}
+  const p=Math.round((i+1)/images.length*100);
+  fill.style.width=p+"%";percent.textContent=p+"%";render();
+ }
+ const failed=images.filter(x=>x.state==="failed").length;
+ status.textContent=failed?`Finished with ${failed} failed image(s).`:"All images processed.";
+ doneText.textContent=`${results.length} transparent PNG(s) ready${failed?` · ${failed} failed`:""}.`;
+ done.classList.remove("hidden");
+ busy=false;processBtn.disabled=false;addBtn.disabled=false;clearBtn.disabled=false;
+};
+
+function pngName(name){return name.replace(/\.[^/.]+$/,"")+"-no-background.png"}
+
+downloadBtn.onclick=async()=>{
+ if(!results.length)return;
+ downloadBtn.disabled=true;downloadBtn.textContent="Creating ZIP…";
+ const zip=new JSZip();
+ results.forEach(x=>zip.file(x.name,x.blob));
+ const blob=await zip.generateAsync({type:"blob",compression:"DEFLATE"});
+ const url=URL.createObjectURL(blob),a=document.createElement("a");
+ a.href=url;a.download="clearcut-results.zip";a.click();
+ setTimeout(()=>URL.revokeObjectURL(url),1000);
+ downloadBtn.disabled=false;downloadBtn.textContent="Download ZIP";
+};
+
+["dragenter","dragover"].forEach(e=>uploadBox.addEventListener(e,x=>{x.preventDefault();uploadBox.classList.add("drag")}));
+["dragleave","drop"].forEach(e=>uploadBox.addEventListener(e,x=>{x.preventDefault();uploadBox.classList.remove("drag")}));
+uploadBox.addEventListener("drop",e=>addFiles([...e.dataTransfer.files]));
+</script>
+</body>
+</html>
